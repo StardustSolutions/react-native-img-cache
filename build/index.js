@@ -28,7 +28,7 @@ export class ImageCache {
     }
     clear() {
         this.cache = {};
-        return RNFetchBlob.fs.unlink(BASE_DIR);
+        RNFetchBlob.fs.unlink(BASE_DIR).catch((error) => console.warn(error, error.stack));
     }
     on(source, handler, immutable) {
         const { uri } = source;
@@ -84,7 +84,7 @@ export class ImageCache {
             }).catch(() => {
                 cache.downloading = false;
                 // Parts of the image may have been downloaded already, (see https://github.com/wkh237/react-native-fetch-blob/issues/331)
-                RNFetchBlob.fs.unlink(path);
+                RNFetchBlob.fs.unlink(path).catch((error) => console.warn(error, error.stack));
             });
         }
     }
